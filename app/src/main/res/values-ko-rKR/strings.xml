@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">큐브 스크램블러</string>
+    <string name="main_text">스크램블</string>
+    <string name="toolbar_title">큐브 스크램블러</string>
+</resources>

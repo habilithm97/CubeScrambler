@@ -2,6 +2,8 @@ package com.example.cubescrambler
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import com.example.cubescrambler.databinding.ActivityMainBinding
 import java.util.Random
@@ -9,8 +11,8 @@ import java.util.Random
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val faceArray = arrayOf("U", "F", "R", "L", "B", "D")
-    private val rotationArray = arrayOf("", "'", "2")
+    private val Face = arrayOf("U", "F", "R", "L", "B", "D")
+    private val Rotation = arrayOf("", "'", "2")
     private val random = Random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.title = getString(R.string.toolbar_title)
+
         binding.tvScramble.setOnTouchListener { v, event ->
             val action = event.action
             when(action) {
@@ -31,6 +36,19 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.option_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.three -> {}
+            R.id.two -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun createScramble(): String {
@@ -46,10 +64,10 @@ class MainActivity : AppCompatActivity() {
                 face = random.nextInt(6)
             } while (face == before || face + before == 5) // 같은 면이거나 반대 면일 경우 다시
             before = face
-            scramble.append(faceArray[face])
+            scramble.append(Face[face])
 
             rotation = random.nextInt(3)
-            scramble.append(rotationArray[rotation]).append(" ")
+            scramble.append(Rotation[rotation]).append(" ")
         }
         return scramble.toString()
     }

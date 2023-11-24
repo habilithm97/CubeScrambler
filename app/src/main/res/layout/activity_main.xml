@@ -14,11 +14,19 @@
         app:titleTextColor="@color/white"/>
 
     <TextView
+        android:id="@+id/tvEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3x3x3"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:gravity="center"/>
+
+    <TextView
         android:id="@+id/tvScramble"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:text="@string/main_text"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold"

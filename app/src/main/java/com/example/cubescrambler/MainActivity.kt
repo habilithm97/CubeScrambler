@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     private val random = Random()
 
     private var cube = 0 // default 3x3x3
+    private val THREE = 0
+    private val TWO = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +33,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.tvScramble.setOnTouchListener { v, event ->
             val action = event.action
-            when(action) {
+            when (action) {
                 MotionEvent.ACTION_UP -> {
-                    if(cube == 0) {
-                        binding.tvScramble.text = createScramble(0)
-                    } else if(cube == 1) {
-                        binding.tvScramble.text = createScramble(1)
+                    if (cube == THREE) {
+                        binding.tvScramble.text = createScramble(THREE)
+                    } else if (cube == TWO) {
+                        binding.tvScramble.text = createScramble(TWO)
                     }
                 }
             }
@@ -47,10 +49,10 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if(cube == 0) {
-            binding.tvScramble.text = createScramble(0)
-        } else if(cube == 1) {
-            binding.tvScramble.text = createScramble(1)
+        if (cube == THREE) {
+            binding.tvScramble.text = createScramble(THREE)
+        } else if (cube == TWO) {
+            binding.tvScramble.text = createScramble(TWO)
         }
     }
 
@@ -60,16 +62,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.three -> {
-                cube = 0
+                cube = THREE
                 binding.tvEvent.text = "3x3x3"
-                binding.tvScramble.text = createScramble(0)
+                binding.tvScramble.text = createScramble(THREE)
             }
+
             R.id.two -> {
-                cube = 1
+                cube = TWO
                 binding.tvEvent.text = "2x2x2"
-                binding.tvScramble.text = createScramble(1)
+                binding.tvScramble.text = createScramble(TWO)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -79,26 +82,30 @@ class MainActivity : AppCompatActivity() {
         val scramble = StringBuilder()
 
         var length = 0
-        if(cube == 0) {
+        if (cube == THREE) {
             length = 20
-        } else if(cube == 1){
+        } else if (cube == TWO) {
             length = 9
         }
 
-        var face: Int
-        var before = -1 // 이전에 나왔던 면을 저장
-        var rotation: Int
+            var face: Int
+            var before = -1 // 이전에 나왔던 면을 저장
+            var rotation: Int
 
-        for (i in 0 until length) {
-            do {
-                face = random.nextInt(6)
-            } while (face == before || face + before == 5) // 같은 면이거나 반대 면일 경우 다시
-            before = face
-            scramble.append(FACE[face])
+            for (i in 0 until length) {
+                do {
+                    if (cube == THREE) {
+                        face = random.nextInt(6)
+                    } else {
+                        face = random.nextInt(3)
+                    }
+                } while (face == before || face + before == 5) // 같은 면이거나 반대 면일 경우 다시
+                before = face
+                scramble.append(FACE[face])
 
-            rotation = random.nextInt(3)
-            scramble.append(ROTATION[rotation]).append(" ")
+                rotation = random.nextInt(3)
+                scramble.append(ROTATION[rotation]).append(" ")
+            }
+            return scramble.toString()
         }
-        return scramble.toString()
     }
-}

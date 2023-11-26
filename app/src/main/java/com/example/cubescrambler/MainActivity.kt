@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private var cube = 0 // default 3x3x3
     private val THREE = 0
     private val TWO = 1
+    private val FOUR = 2
+    private val FIVE = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,10 @@ class MainActivity : AppCompatActivity() {
                         binding.tvScramble.text = createScramble(THREE)
                     } else if (cube == TWO) {
                         binding.tvScramble.text = createScramble(TWO)
+                    } else if (cube == FOUR) {
+                        binding.tvScramble.text = createScramble(FOUR)
+                    } else if (cube == FIVE) {
+                        binding.tvScramble.text = createScramble(FIVE)
                     }
                 }
             }
@@ -53,6 +59,10 @@ class MainActivity : AppCompatActivity() {
             binding.tvScramble.text = createScramble(THREE)
         } else if (cube == TWO) {
             binding.tvScramble.text = createScramble(TWO)
+        } else if (cube == FOUR) {
+            binding.tvScramble.text = createScramble(FOUR)
+        } else if (cube == FIVE) {
+            binding.tvScramble.text = createScramble(FIVE)
         }
     }
 
@@ -68,11 +78,20 @@ class MainActivity : AppCompatActivity() {
                 binding.tvEvent.text = "3x3x3"
                 binding.tvScramble.text = createScramble(THREE)
             }
-
             R.id.two -> {
                 cube = TWO
                 binding.tvEvent.text = "2x2x2"
                 binding.tvScramble.text = createScramble(TWO)
+            }
+            R.id.four -> {
+                cube = FOUR
+                binding.tvEvent.text = "4x4x4"
+                binding.tvScramble.text = createScramble(FOUR)
+            }
+            R.id.five -> {
+                cube = FIVE
+                binding.tvEvent.text = "5x5x5"
+                binding.tvScramble.text = createScramble(FIVE)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -85,27 +104,44 @@ class MainActivity : AppCompatActivity() {
         if (cube == THREE) {
             length = 20
         } else if (cube == TWO) {
-            length = 9
+            length = 10
+        } else if (cube == FOUR) {
+            length = 45
+        } else if (cube == FIVE) {
+            length = 60
         }
 
-            var face: Int
-            var before = -1 // 이전에 나왔던 면을 저장
-            var rotation: Int
+        var face: Int
+        var before = -1 // 이전에 나왔던 면을 저장
+        var rotation: Int
+        var isW = false
 
-            for (i in 0 until length) {
-                do {
-                    if (cube == THREE) {
-                        face = random.nextInt(6)
+        for (i in 0 until length) {
+            do {
+                if (cube == TWO) {
+                    face = random.nextInt(3)
+                } else {
+                    face = random.nextInt(6)
+                }
+            } while (face == before || face + before == 5) // 같은 면이거나 반대 면일 경우 다시
+            before = face
+            scramble.append(FACE[face])
+
+            if(cube == FOUR || cube == FIVE) {
+                isW = random.nextBoolean()
+                if(isW) {
+                    if(cube == FOUR) {
+                        if(face == 0 || face == 1 || face == 2) {
+                            scramble.append("w")
+                        }
                     } else {
-                        face = random.nextInt(3)
+                        scramble.append("w")
                     }
-                } while (face == before || face + before == 5) // 같은 면이거나 반대 면일 경우 다시
-                before = face
-                scramble.append(FACE[face])
-
-                rotation = random.nextInt(3)
-                scramble.append(ROTATION[rotation]).append(" ")
+                }
             }
-            return scramble.toString()
+            rotation = random.nextInt(3)
+            scramble.append(ROTATION[rotation]).append(" ")
         }
+        return scramble.toString()
     }
+}

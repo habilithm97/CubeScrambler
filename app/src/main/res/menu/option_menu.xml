@@ -6,4 +6,10 @@
     <item
         android:id="@+id/two"
         android:title="2x2x2"/>
+    <item
+        android:id="@+id/four"
+        android:title="4x4x4"/>
+    <item
+        android:id="@+id/five"
+        android:title="5x5x5"/>
 </menu>

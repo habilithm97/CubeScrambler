@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.CubeScrambler" parent="Base.Theme.CubeScrambler" />
+
+    <style name="KebabTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:tint">@color/white</item>
+    </style>
 </resources>

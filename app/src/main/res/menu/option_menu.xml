@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/three"
         android:title="3x3x3"/>
@@ -12,4 +13,9 @@
     <item
         android:id="@+id/five"
         android:title="5x5x5"/>
+    <item
+        android:id="@+id/license"
+        android:title="license"
+        android:icon="@drawable/ic_launcher_foreground"
+        app:showAsAction="always"/>
 </menu>

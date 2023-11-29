@@ -1,11 +1,13 @@
 package com.example.cubescrambler
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import com.example.cubescrambler.databinding.ActivityMainBinding
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import java.util.Random
 
 class MainActivity : AppCompatActivity() {
@@ -30,9 +32,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        setSupportActionBar(binding.toolbar)
-        binding.toolbar.title = getString(R.string.toolbar)
-
         binding.tvScramble.setOnTouchListener { v, event ->
             val action = event.action
             when (action) {
@@ -92,6 +91,9 @@ class MainActivity : AppCompatActivity() {
                 cube = FIVE
                 binding.tvEvent.text = "5x5x5"
                 binding.tvScramble.text = createScramble(FIVE)
+            }
+            R.id.license -> {
+                startActivity(Intent(this, OssLicensesMenuActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)

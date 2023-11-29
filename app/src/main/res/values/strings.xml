@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">CubeScrambler</string>
-    <string name="toolbar">Cube Scrambler</string>
+    <string name="app_name">Cube Scrambler</string>
 </resources>

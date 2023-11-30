@@ -1,5 +1,6 @@
 package com.example.cubescrambler
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,11 +18,9 @@ class MainActivity : AppCompatActivity() {
     private val ROTATION = arrayOf("", "'", "2")
     private val random = Random()
 
-    private var cube = 0 // default 3x3x3
-    private val THREE = 0
+    private var cube = 0
+    private val THREE = 0 // default
     private val TWO = 1
-    private val FOUR = 2
-    private val FIVE = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
         binding.tvScramble.setOnTouchListener { v, event ->
             val action = event.action
@@ -40,10 +40,6 @@ class MainActivity : AppCompatActivity() {
                         binding.tvScramble.text = createScramble(THREE)
                     } else if (cube == TWO) {
                         binding.tvScramble.text = createScramble(TWO)
-                    } else if (cube == FOUR) {
-                        binding.tvScramble.text = createScramble(FOUR)
-                    } else if (cube == FIVE) {
-                        binding.tvScramble.text = createScramble(FIVE)
                     }
                 }
             }
@@ -58,10 +54,6 @@ class MainActivity : AppCompatActivity() {
             binding.tvScramble.text = createScramble(THREE)
         } else if (cube == TWO) {
             binding.tvScramble.text = createScramble(TWO)
-        } else if (cube == FOUR) {
-            binding.tvScramble.text = createScramble(FOUR)
-        } else if (cube == FIVE) {
-            binding.tvScramble.text = createScramble(FIVE)
         }
     }
 
@@ -74,23 +66,13 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.three -> {
                 cube = THREE
-                binding.tvEvent.text = "3x3x3"
+                binding.tvCube.text = "3x3x3"
                 binding.tvScramble.text = createScramble(THREE)
             }
             R.id.two -> {
                 cube = TWO
-                binding.tvEvent.text = "2x2x2"
+                binding.tvCube.text = "2x2x2"
                 binding.tvScramble.text = createScramble(TWO)
-            }
-            R.id.four -> {
-                cube = FOUR
-                binding.tvEvent.text = "4x4x4"
-                binding.tvScramble.text = createScramble(FOUR)
-            }
-            R.id.five -> {
-                cube = FIVE
-                binding.tvEvent.text = "5x5x5"
-                binding.tvScramble.text = createScramble(FIVE)
             }
             R.id.license -> {
                 startActivity(Intent(this, OssLicensesMenuActivity::class.java))
@@ -107,16 +89,11 @@ class MainActivity : AppCompatActivity() {
             length = 20
         } else if (cube == TWO) {
             length = 10
-        } else if (cube == FOUR) {
-            length = 45
-        } else if (cube == FIVE) {
-            length = 60
         }
 
         var face: Int
         var before = -1 // 이전에 나왔던 면을 저장
         var rotation: Int
-        var isW = false
 
         for (i in 0 until length) {
             do {
@@ -129,18 +106,6 @@ class MainActivity : AppCompatActivity() {
             before = face
             scramble.append(FACE[face])
 
-            if(cube == FOUR || cube == FIVE) {
-                isW = random.nextBoolean()
-                if(isW) {
-                    if(cube == FOUR) {
-                        if(face == 0 || face == 1 || face == 2) {
-                            scramble.append("w")
-                        }
-                    } else {
-                        scramble.append("w")
-                    }
-                }
-            }
             rotation = random.nextInt(3)
             scramble.append(ROTATION[rotation]).append(" ")
         }
